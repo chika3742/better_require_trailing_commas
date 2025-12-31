@@ -1,6 +1,6 @@
-# require_trailing_commas_custom
+# better_require_trailing_commas
 
-A lint rule for [custom_lint](https://pub.dev/packages/custom_lint)
+Dart linter plugin to enforce trailing commas (enhanced version of `linter` built-in `require_trailing_commas`)
 
 **The rule is simple.** If you opened parentheses intending to write multiline contents, it requires trailing commas. It's like `always-multiline`setting of `comma-dangle` rule in ESLint.
 
@@ -77,25 +77,27 @@ Of course, also have quick fixes.
 
 ## Installation
 
-Just add this package to your dependencies. [custom_lint](https://pub.dev/packages/custom_lint) package is required to
-use this lint rule.
+Just add this package to your dependencies. **This plugin requires Dart SDK >= 3.10 or Flutter SDK >= 3.38.**
 
 ```shell
-dart pub add dev:require_trailing_commas_custom dev:custom_lint
+dart pub add dev:better_require_trailing_commas
 # or
-flutter pub add dev:require_trailing_commas_custom dev:custom_lint
+flutter pub add dev:better_require_trailing_commas
 ```
 
 If you're using an IDE like VSCode, edit your `analysis_options.yaml` like this:
 ```yaml
 # ...
-analyzer:
-  plugins:
-    - custom_lint
+# Note: `plugins` property is TOP LEVEL.
+plugins:
+  better_require_trailing_commas:
+    version: ^2.0.0
+    diagnostics:
+      better_require_trailing_commas: true
 # ...
 ```
 
 Running the linter with command line:
 ```shell
-dart run custom_lint
+dart analyze
 ```
