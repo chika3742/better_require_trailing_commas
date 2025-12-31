@@ -77,15 +77,8 @@ Of course, also have quick fixes.
 
 ## Installation
 
-Just add this package to your dependencies. **This plugin requires Dart SDK >= 3.10 or Flutter SDK >= 3.38.**
+Edit your `analysis_options.yaml` like below. Depending on this package is not needed (for more information, [see here](https://github.com/dart-lang/sdk/blob/main/pkg/analysis_server_plugin/doc/using_plugins.md)).
 
-```shell
-dart pub add dev:better_require_trailing_commas
-# or
-flutter pub add dev:better_require_trailing_commas
-```
-
-If you're using an IDE like VSCode, edit your `analysis_options.yaml` like this:
 ```yaml
 # ...
 # Note: `plugins` property is TOP LEVEL.
