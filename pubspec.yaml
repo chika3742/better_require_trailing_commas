@@ -1,7 +1,7 @@
-name: require_trailing_commas_custom
+name: better_require_trailing_commas
 description: A lint rule that enforces trailing commas behaves like ESLint’s comma-dangle with the always-multiline option.
 version: 1.0.4
-repository: https://github.com/chika3742/require_trailing_commas_custom
+repository: https://github.com/chika3742/better_require_trailing_commas
 
 environment:
   sdk: ^3.7.0
