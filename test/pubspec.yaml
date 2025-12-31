@@ -1,9 +1,0 @@
-name: require_trailing_commas_custom_test
-
-environment:
-  sdk: ^3.7.0
-
-dependencies:
-  require_trailing_commas_custom:
-    path: ../
-  custom_lint: ^0.8.1
