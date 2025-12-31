@@ -1,3 +1,7 @@
+## 2.0.0
+- Rewrite using `analysis_server_plugin` instead of `custom_lint`
+  - **Requires `analyzer ^9.0.0` and Dart SDK `^3.10` (Flutter `^3.38`)**
+
 ## 1.0.4
 - Support `analyzer` v8.0.0
 
