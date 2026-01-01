@@ -19,14 +19,17 @@ class BetterRequireTrailingCommasTest extends AnalysisRuleTest {
   }
 
   void test_argumentListWithoutComma() async {
-    await assertDiagnostics(r"""
+    await assertDiagnostics(
+      r"""
 void fn({String? arg1}) {}
 void f() {
   fn(
     arg1: "value"
   );
 }
-    """, [lint(64, 1)]);
+    """,
+      [lint(64, 1)],
+    );
   }
 
   void test_argumentListWithComma() async {
@@ -40,9 +43,9 @@ void f() {
     """);
   }
 
-
   void test_assertInitializerWithoutComma() async {
-    await assertDiagnostics(r"""
+    await assertDiagnostics(
+      r"""
 class Test {
   const Test(String foo)
       : assert(
@@ -50,7 +53,9 @@ class Test {
           "foo must be 'bar'"
         );
 }
-    """, [lint(116, 1)]);
+    """,
+      [lint(116, 1)],
+    );
   }
 
   void test_assertInitializerWithComma() async {
@@ -65,9 +70,9 @@ class Test {
     """);
   }
 
-
   void test_assertStatementWithoutComma() async {
-    await assertDiagnostics(r"""
+    await assertDiagnostics(
+      r"""
 void fn() {
   final foo = "bar";
   assert(
@@ -75,7 +80,9 @@ void fn() {
     "foo must be 'bar'"
   );
 }
-    """, [lint(87, 1)]);
+    """,
+      [lint(87, 1)],
+    );
   }
 
   void test_assertStatementWithComma() async {
@@ -90,9 +97,9 @@ void fn() {
     """);
   }
 
-
   void test_formalParameterListWithoutComma() async {
-    await assertDiagnostics(r"""
+    await assertDiagnostics(
+      r"""
 void fn1({
   String? foo,
   String? bar
@@ -110,12 +117,9 @@ void fn4(
   String? bar, {
   String? baz
 }) {}
-    """, [
-      lint(40, 1),
-      lint(86, 1),
-      lint(131, 1),
-      lint(192, 1),
-    ]);
+    """,
+      [lint(40, 1), lint(86, 1), lint(131, 1), lint(192, 1)],
+    );
   }
 
   void test_formalParameterListWithComma() async {
@@ -140,16 +144,16 @@ void fn4(
     """);
   }
 
-
   void test_listLiteralWithoutComma() async {
-    await assertDiagnostics(r"""
+    await assertDiagnostics(
+      r"""
 final list = [
   1,
   2
 ];
-    """, [
-      lint(24, 1),
-    ]);
+    """,
+      [lint(24, 1)],
+    );
   }
 
   void test_listLiteralWithComma() async {
@@ -161,9 +165,9 @@ final list = [
     """);
   }
 
-
   void test_setOrMapLiteralWithoutComma() async {
-    await assertDiagnostics(r"""
+    await assertDiagnostics(
+      r"""
 final set = {
   1,
   2
@@ -172,10 +176,9 @@ final map = {
   1: "one",
   2: "two"
 };
-    """, [
-      lint(23, 1),
-      lint(63, 1),
-    ]);
+    """,
+      [lint(23, 1), lint(63, 1)],
+    );
   }
 
   void test_setOrMapLiteralWithComma() async {
@@ -191,9 +194,9 @@ final map = {
     """);
   }
 
-
   void test_recordLiteralWithoutComma() async {
-    await assertDiagnostics(r"""
+    await assertDiagnostics(
+      r"""
 final record1 = (
   1,
   2
@@ -202,10 +205,9 @@ final record2 = (
   one: 1,
   two: 2
 );
-    """, [
-      lint(27, 1),
-      lint(67, 1),
-    ]);
+    """,
+      [lint(27, 1), lint(67, 1)],
+    );
   }
 
   void test_recordLiteralWithComma() async {
@@ -221,9 +223,9 @@ final record2 = (
     """);
   }
 
-
   void test_recordPatternWithoutComma() async {
-    await assertDiagnostics(r"""
+    await assertDiagnostics(
+      r"""
 void fn () {
   final (
     :name,
@@ -235,10 +237,9 @@ void fn () {
     two
   ) = (1, 2);
 }
-    """, [
-      lint(45, 1),
-      lint(103, 1),
-    ]);
+    """,
+      [lint(45, 1), lint(103, 1)],
+    );
   }
 
   void test_recordPatternWithComma() async {
@@ -257,9 +258,9 @@ void fn6 () {
     """);
   }
 
-
   void test_recordTypeAnnotationWithoutComma() async {
-    await assertDiagnostics(r"""
+    await assertDiagnostics(
+      r"""
 typedef recordType1 = (
   int,
   int
@@ -268,10 +269,9 @@ typedef recordType2 = ({
   String name,
   int age
 });
-    """, [
-      lint(37, 1),
-      lint(90, 1),
-    ]);
+    """,
+      [lint(37, 1), lint(90, 1)],
+    );
   }
 
   void test_recordTypeAnnotationWithComma() async {
@@ -287,9 +287,9 @@ typedef recordType2 = ({
     """);
   }
 
-
   void test_switchExpressionWithoutComma() async {
-    await assertDiagnostics(r"""
+    await assertDiagnostics(
+      r"""
 void fn() {
   final success = true;
   final foo = switch (success) {
@@ -297,9 +297,9 @@ void fn() {
     false => "failure"
   };
 }
-    """, [
-      lint(117, 1),
-    ]);
+    """,
+      [lint(117, 1)],
+    );
   }
 
   void test_switchExpressionWithComma() async {
@@ -314,9 +314,9 @@ void fn() {
     """);
   }
 
-
   void test_enumDeclarationWithoutComma() async {
-    await assertDiagnostics(r"""
+    await assertDiagnostics(
+      r"""
 enum FooState1 {
   bar,
   baz
@@ -336,11 +336,9 @@ enum BarState {
 
   final String name;
 }
-    """, [
-      lint(30, 1),
-      lint(64, 1),
-      lint(122, 1),
-    ]);
+    """,
+      [lint(30, 1), lint(64, 1), lint(122, 1)],
+    );
   }
 
   void test_enumDeclarationWithComma() async {
@@ -371,9 +369,9 @@ enum BarState {
     """);
   }
 
-
   void test_useEffect() async {
-    await assertDiagnostics(r"""
+    await assertDiagnostics(
+      r"""
 void fn() {
   useEffect(() {
     // do something
@@ -386,13 +384,14 @@ void fn() {
   );
 }
 void useEffect(void Function() cb, List<Object> dependencies) {}
-    """, [
-      lint(119, 1),
-    ]);
+    """,
+      [lint(119, 1)],
+    );
   }
 
   void test_multilineException() async {
-    await assertDiagnostics(r"""
+    await assertDiagnostics(
+      r"""
 void fn() {
   Foo(Bar(
     baz: "baz",
@@ -409,6 +408,8 @@ class Bar {
   final String baz;
   Bar({required this.baz});
 }
-    """, [lint(74, 1)]);
+    """,
+      [lint(74, 1)],
+    );
   }
 }

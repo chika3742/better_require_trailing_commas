@@ -26,7 +26,10 @@ class _BetterRequireTrailingCommasPlugin extends Plugin {
   FutureOr<void> register(PluginRegistry registry) {
     registry
       ..registerLintRule(BetterRequireTrailingCommasRule())
-      ..registerFixForRule(BetterRequireTrailingCommasRule.code, _AddTrailingComma.new);
+      ..registerFixForRule(
+        BetterRequireTrailingCommasRule.code,
+        _AddTrailingComma.new,
+      );
   }
 }
 
@@ -38,16 +41,20 @@ class BetterRequireTrailingCommasRule extends AnalysisRule {
     correctionMessage: "Try adding a trailing comma.",
   );
 
-  BetterRequireTrailingCommasRule() : super(
-    name: "better_require_trailing_commas",
-    description: "Enforces trailing commas.",
-  );
+  BetterRequireTrailingCommasRule()
+    : super(
+        name: "better_require_trailing_commas",
+        description: "Enforces trailing commas.",
+      );
 
   @override
   DiagnosticCode get diagnosticCode => code;
 
   @override
-  void registerNodeProcessors(RuleVisitorRegistry registry, RuleContext context) {
+  void registerNodeProcessors(
+    RuleVisitorRegistry registry,
+    RuleContext context,
+  ) {
     final visitor = _RequireTrailingCommasVisitor(this, context);
 
     registry
@@ -97,7 +104,7 @@ class _RequireTrailingCommasVisitor extends SimpleAstVisitor<void> {
       lastNode: node.message ?? node.condition,
     );
   }
-  
+
   @override
   void visitAssertStatement(AssertStatement node) {
     _checkTrailingComma(
@@ -107,7 +114,7 @@ class _RequireTrailingCommasVisitor extends SimpleAstVisitor<void> {
       lastNode: node.message ?? node.condition,
     );
   }
-  
+
   @override
   void visitFormalParameterList(FormalParameterList node) {
     if (node.parameters.isEmpty) return;
@@ -119,7 +126,7 @@ class _RequireTrailingCommasVisitor extends SimpleAstVisitor<void> {
       errorToken: node.rightDelimiter ?? node.rightParenthesis,
     );
   }
-  
+
   @override
   void visitListLiteral(ListLiteral node) {
     if (node.elements.isEmpty) return;
@@ -130,7 +137,7 @@ class _RequireTrailingCommasVisitor extends SimpleAstVisitor<void> {
       lastNode: node.elements.last,
     );
   }
-  
+
   @override
   void visitSetOrMapLiteral(SetOrMapLiteral node) {
     if (node.elements.isEmpty) return;
@@ -141,7 +148,7 @@ class _RequireTrailingCommasVisitor extends SimpleAstVisitor<void> {
       lastNode: node.elements.last,
     );
   }
-  
+
   @override
   void visitRecordLiteral(RecordLiteral node) {
     if (node.fields.isEmpty) return;
@@ -152,7 +159,7 @@ class _RequireTrailingCommasVisitor extends SimpleAstVisitor<void> {
       lastNode: node.fields.last,
     );
   }
-  
+
   @override
   void visitRecordPattern(RecordPattern node) {
     if (node.fields.isEmpty) return;
@@ -163,7 +170,7 @@ class _RequireTrailingCommasVisitor extends SimpleAstVisitor<void> {
       lastNode: node.fields.last,
     );
   }
-  
+
   @override
   void visitRecordTypeAnnotation(RecordTypeAnnotation node) {
     if (node.namedFields == null && node.positionalFields.isEmpty) return;
@@ -176,7 +183,7 @@ class _RequireTrailingCommasVisitor extends SimpleAstVisitor<void> {
       errorToken: node.namedFields?.rightBracket ?? node.rightParenthesis,
     );
   }
-  
+
   @override
   void visitSwitchExpression(SwitchExpression node) {
     if (node.cases.isEmpty) return;
@@ -187,7 +194,7 @@ class _RequireTrailingCommasVisitor extends SimpleAstVisitor<void> {
       lastNode: node.cases.last,
     );
   }
-  
+
   @override
   void visitEnumDeclaration(EnumDeclaration node) {
     if (node.constants.isEmpty) return;
@@ -222,11 +229,11 @@ class _RequireTrailingCommasVisitor extends SimpleAstVisitor<void> {
   /// Returns `true` if the opening and closing tokens are on different lines
   /// than the child nodes.
   bool _isMultiline(
-      Token openingToken,
-      Token closingToken,
-      AstNode firstNode,
-      AstNode lastNode,
-      ) {
+    Token openingToken,
+    Token closingToken,
+    AstNode firstNode,
+    AstNode lastNode,
+  ) {
     if (!_isSameLine(openingToken, firstNode.beginToken) &&
         !_isSameLine(closingToken, lastNode.endToken)) {
       return true;
@@ -236,7 +243,7 @@ class _RequireTrailingCommasVisitor extends SimpleAstVisitor<void> {
 
   bool _isSameLine(Token token1, Token token2) =>
       _lineInfo.getLocation(token1.offset).lineNumber ==
-          _lineInfo.getLocation(token2.end).lineNumber;
+      _lineInfo.getLocation(token2.end).lineNumber;
 }
 
 class _AddTrailingComma extends ResolvedCorrectionProducer {
@@ -249,7 +256,8 @@ class _AddTrailingComma extends ResolvedCorrectionProducer {
   _AddTrailingComma({required super.context});
 
   @override
-  CorrectionApplicability get applicability => CorrectionApplicability.singleLocation;
+  CorrectionApplicability get applicability =>
+      CorrectionApplicability.singleLocation;
 
   @override
   FixKind get fixKind => _kind;
@@ -270,9 +278,7 @@ class _AddTrailingComma extends ResolvedCorrectionProducer {
       case AssertStatement(:final rightParenthesis):
         await insertCommaAfter(rightParenthesis.previous!);
       case FormalParameterList(:final rightDelimiter, :final rightParenthesis):
-        await insertCommaAfter(
-          (rightDelimiter ?? rightParenthesis).previous!,
-        );
+        await insertCommaAfter((rightDelimiter ?? rightParenthesis).previous!);
       case ListLiteral(:final rightBracket):
         await insertCommaAfter(rightBracket.previous!);
       case SetOrMapLiteral(:final rightBracket):
@@ -288,9 +294,7 @@ class _AddTrailingComma extends ResolvedCorrectionProducer {
       case SwitchExpression(:final rightBracket):
         await insertCommaAfter(rightBracket.previous!);
       case EnumDeclaration(:final semicolon, :final rightBracket):
-        await insertCommaAfter(
-          (semicolon ?? rightBracket).previous!,
-        );
+        await insertCommaAfter((semicolon ?? rightBracket).previous!);
     }
   }
 }
