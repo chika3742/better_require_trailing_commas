@@ -77,7 +77,9 @@ Of course, also have quick fixes.
 
 ## Installation
 
-Edit your `analysis_options.yaml` like below. Depending on this package is not needed (for more information, [see here](https://github.com/dart-lang/sdk/blob/main/pkg/analysis_server_plugin/doc/using_plugins.md)).
+**Dart 3.10 or later (Flutter 3.38 or later) is required to use this plugin.**
+
+Edit your `analysis_options.yaml` like below. You don't need to add this to your dependencies (for more information, [see here](https://github.com/dart-lang/sdk/blob/main/pkg/analysis_server_plugin/doc/using_plugins.md)).
 
 ```yaml
 # ...
