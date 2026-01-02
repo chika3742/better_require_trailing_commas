@@ -1,3 +1,7 @@
+## 2.0.3
+- Allow analyzer 8.x
+- Update README
+
 ## 2.0.2
 - Update README
 
