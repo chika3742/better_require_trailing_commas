@@ -1,3 +1,7 @@
+## 2.0.4
+- Enabled the lint rule by default. Now `diagnostics` config in `analysis_options.yaml` is no longer needed.
+- Update README
+
 ## 2.0.3
 - Allow analyzer 8.x
 - Update README
