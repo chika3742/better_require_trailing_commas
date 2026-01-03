@@ -25,7 +25,7 @@ class _BetterRequireTrailingCommasPlugin extends Plugin {
   @override
   FutureOr<void> register(PluginRegistry registry) {
     registry
-      ..registerLintRule(BetterRequireTrailingCommasRule())
+      ..registerWarningRule(BetterRequireTrailingCommasRule())
       ..registerFixForRule(
         BetterRequireTrailingCommasRule.code,
         _AddTrailingComma.new,
