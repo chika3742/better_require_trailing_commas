@@ -85,11 +85,10 @@ Edit your `analysis_options.yaml` like below. You don't need to add this to your
 # ...
 # Note: `plugins` property is TOP LEVEL.
 plugins:
-  better_require_trailing_commas:
-    version: ^2.0.0
   # Note: Do not put `riverpod_lint` after this plugin.
   #       This may cause unexpected behavior.
   # riverpod_lint: ^3.1.0 # Put this BEFORE better_require_trailing_commas
+  better_require_trailing_commas: ^2.0.0
 # ...
 ```
 
