@@ -8,11 +8,11 @@ environment:
 
 dependencies:
   meta: ^1.17.0
-  analyzer: ">=8.0.0 <10.0.0"
-  analyzer_plugin: ^0.13.10
-  analysis_server_plugin: ^0.3.0
+  analyzer: ^10.0.1
+  analyzer_plugin: ^0.14.1
+  analysis_server_plugin: ^0.3.6
 
 dev_dependencies:
-  analyzer_testing: ^0.1.7
+  analyzer_testing: ^0.1.9
   lints: ^6.0.0
   test_reflective_loader: ^0.4.0
