@@ -69,7 +69,7 @@ class BetterRequireTrailingCommasRule extends AnalysisRule {
       ..addRecordPattern(this, visitor)
       ..addRecordTypeAnnotation(this, visitor)
       ..addSwitchExpression(this, visitor)
-      ..addEnumDeclaration(this, visitor);
+      ..addEnumBody(this, visitor);
   }
 }
 
@@ -196,7 +196,7 @@ class _RequireTrailingCommasVisitor extends SimpleAstVisitor<void> {
   }
 
   @override
-  void visitEnumDeclaration(EnumDeclaration node) {
+  void visitEnumBody(EnumBody node) {
     if (node.constants.isEmpty) return;
     _checkTrailingComma(
       openingToken: node.leftBracket,
@@ -293,7 +293,7 @@ class _AddTrailingComma extends ResolvedCorrectionProducer {
         );
       case SwitchExpression(:final rightBracket):
         await insertCommaAfter(rightBracket.previous!);
-      case EnumDeclaration(:final semicolon, :final rightBracket):
+      case EnumBody(:final semicolon, :final rightBracket):
         await insertCommaAfter((semicolon ?? rightBracket).previous!);
     }
   }
