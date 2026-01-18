@@ -1,3 +1,6 @@
+## 2.1.0
+- Require `analyzer` 10.0.1 or higher
+
 ## 2.0.5
 - Update README
 
