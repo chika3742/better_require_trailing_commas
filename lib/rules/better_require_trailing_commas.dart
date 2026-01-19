@@ -97,7 +97,7 @@ class _RequireTrailingCommasVisitor extends SimpleAstVisitor<void> {
     if (node.parameters.isEmpty) return;
     _checkTrailingComma(
       openingToken: node.leftParenthesis,
-      closingToken: node.rightParenthesis,
+      closingToken: node.rightDelimiter ?? node.rightParenthesis,
       firstNode: node.parameters.first,
       lastNode: node.parameters.last,
       errorToken: node.rightDelimiter ?? node.rightParenthesis,
@@ -154,7 +154,7 @@ class _RequireTrailingCommasVisitor extends SimpleAstVisitor<void> {
     final fields = (node.namedFields?.fields ?? node.positionalFields);
     _checkTrailingComma(
       openingToken: node.leftParenthesis,
-      closingToken: node.rightParenthesis,
+      closingToken: node.namedFields?.rightBracket ?? node.rightParenthesis,
       firstNode: fields.first,
       lastNode: fields.last,
       errorToken: node.namedFields?.rightBracket ?? node.rightParenthesis,

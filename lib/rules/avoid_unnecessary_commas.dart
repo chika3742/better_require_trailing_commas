@@ -11,6 +11,7 @@ import 'package:analyzer/source/line_info.dart';
 import 'package:analyzer/source/source_range.dart';
 import 'package:analyzer_plugin/utilities/change_builder/change_builder_core.dart';
 import 'package:analyzer_plugin/utilities/fixes/fixes.dart';
+import 'package:better_require_trailing_commas/utils/debug.dart';
 
 class AvoidUnnecessaryCommasRule extends AnalysisRule {
   static const code = LintCode(
@@ -88,7 +89,7 @@ class _AvoidUnnecessaryCommasVisitor extends SimpleAstVisitor<void> {
   void visitFormalParameterList(FormalParameterList node) {
     if (node.parameters.isEmpty) return;
     _checkTrailingComma(
-      closingToken: node.rightParenthesis,
+      closingToken: node.rightDelimiter ?? node.rightParenthesis,
       lastNode: node.parameters.last,
     );
   }
@@ -134,7 +135,7 @@ class _AvoidUnnecessaryCommasVisitor extends SimpleAstVisitor<void> {
     if (node.namedFields == null && node.positionalFields.isEmpty) return;
     final fields = (node.namedFields?.fields ?? node.positionalFields);
     _checkTrailingComma(
-      closingToken: node.rightParenthesis,
+      closingToken: node.namedFields?.rightBracket ?? node.rightParenthesis,
       lastNode: fields.last,
     );
   }
@@ -161,17 +162,17 @@ class _AvoidUnnecessaryCommasVisitor extends SimpleAstVisitor<void> {
     required Token closingToken,
     required AstNode lastNode,
   }) {
-    var lastToken = lastNode.endToken.next;
+    var lastToken = lastNode.endToken;
 
     // Early exit if trailing comma is not present.
-    if (lastToken?.type != TokenType.COMMA) return;
+    if (closingToken.previous?.type != TokenType.COMMA) return;
 
     // comma token and closing token are on different lines
-    if (!_isSameLine(lastToken!, closingToken)) {
+    if (!_isSameLine(lastToken, closingToken)) {
       return;
     }
 
-    rule.reportAtToken(lastToken);
+    rule.reportAtToken(closingToken.previous!);
   }
 
   bool _isSameLine(Token token1, Token token2) =>
@@ -198,7 +199,7 @@ class RemoveUnnecessaryTrailingCommaFix extends ResolvedCorrectionProducer {
   @override
   Future<void> compute(ChangeBuilder builder) async {
     await builder.addDartFileEdit(file, (builder) {
-      builder.addDeletion(SourceRange(token.offset, 1));
+      builder.addDeletion(SourceRange(node.endToken.previous!.offset, 1));
     });
   }
 }
