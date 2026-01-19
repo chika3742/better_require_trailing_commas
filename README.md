@@ -4,7 +4,14 @@ Dart linter plugin to enforce trailing commas (enhanced version of `linter` buil
 
 **The rule is simple.** If you opened parentheses intending to write multiline contents, it requires trailing commas. It's like `always-multiline`setting of `comma-dangle` rule in ESLint.
 
-### ✅ Good
+## Rules
+
+### better_require_trailing_commas
+
+Enforces trailing commas for multiline collections, function calls, function definitions, and other constructs that
+support trailing commas.
+
+#### ✅ Good
 ```dart
 Foo(
   a: 1,
@@ -21,7 +28,7 @@ useEffect(() {
 }, []);
 ```
 
-### ❌️ Bad
+#### ❌️ Bad
 ```dart
 Foo(
   a: 1,
@@ -39,24 +46,20 @@ useEffect(
   },
   [] // <-
 );
-```
-Records are supported
-```dart
+
+// Records are supported
 final (String, String) foo = (
   "bar",
   "baz" // <-
 );
-```
-Switch expressions are supported
-```dart
+
+// Switch expressions are supported
 final foo = switch (state) {
   State.success => 0,
   State.failure => 1 // <-
 }
-```
 
-Enums are supported
-```dart
+// Enums are supported
 enum FooState {
   bar,
   baz // <-
@@ -73,7 +76,26 @@ enum BarState {
 }
 ```
 
-Of course, also have quick fixes.
+### avoid_unnecessary_commas
+
+Disallows unnecessary trailing commas for single-line collections, function calls, function definitions, and other
+constructs that support trailing commas.
+
+#### ✅ Good
+```dart
+Foo(a: 1, b: 2);
+Foo(Bar(
+  baz: "baz",
+));
+```
+
+#### ❌️ Bad
+```dart
+Foo(a: 1, b: 2,); // <-
+Foo(Bar(
+  baz: "baz",
+),); // <-
+```
 
 ## Installation
 
@@ -87,9 +109,19 @@ Edit your `analysis_options.yaml` like below. You don't need to add this to your
 plugins:
   # Note: Do not put `riverpod_lint` after this plugin.
   #       This may cause unexpected behavior.
-  # riverpod_lint: ^3.1.0 # Put this BEFORE better_require_trailing_commas
-  better_require_trailing_commas: ^2.0.0
+  # riverpod_lint: ^3.2.0 # Put this BEFORE better_require_trailing_commas
+  better_require_trailing_commas: ^2.2.0
 # ...
+```
+
+Each rule can be disabled by `diagnostics` section like below:
+
+```yaml
+plugins:
+  better_require_trailing_commas:
+    version: ^2.2.0
+    diagnostics:
+      avoid_unnecessary_commas: false
 ```
 
 Running the linter with command line:
