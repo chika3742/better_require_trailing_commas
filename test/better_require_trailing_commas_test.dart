@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:analyzer_testing/analysis_rule/analysis_rule.dart';
-import 'package:better_require_trailing_commas/main.dart';
+import 'package:better_require_trailing_commas/rules/better_require_trailing_commas.dart';
 import 'package:test_reflective_loader/test_reflective_loader.dart';
 
 void main() {
