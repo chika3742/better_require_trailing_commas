@@ -11,7 +11,6 @@ import 'package:analyzer/source/line_info.dart';
 import 'package:analyzer/source/source_range.dart';
 import 'package:analyzer_plugin/utilities/change_builder/change_builder_core.dart';
 import 'package:analyzer_plugin/utilities/fixes/fixes.dart';
-import 'package:better_require_trailing_commas/utils/debug.dart';
 
 class AvoidUnnecessaryCommasRule extends AnalysisRule {
   static const code = LintCode(
