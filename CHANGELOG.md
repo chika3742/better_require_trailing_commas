@@ -1,9 +1,6 @@
-## 2.2.0-dev.2
+## 2.2.0
+- Added `avoid_unnecessary_commas` lint rule.
 - Fix detection logic for formal parameter lists and record type annots.
-- Fix `avoid_unnecessary_commas` quick fix offset calculation.
-
-## 2.2.0-dev.1
-- Added `avoid_unnecessary_commas` lint rule
 
 ## 2.1.0
 - Require `analyzer` 10.0.1 or higher
