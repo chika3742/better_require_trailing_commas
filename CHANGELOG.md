@@ -1,3 +1,7 @@
+## 2.2.0-dev.2
+- Fix detection logic for formal parameter lists and record type annots.
+- Fix `avoid_unnecessary_commas` quick fix offset calculation.
+
 ## 2.2.0-dev.1
 - Added `avoid_unnecessary_commas` lint rule
 
