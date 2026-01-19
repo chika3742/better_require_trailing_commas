@@ -6,6 +6,9 @@ Dart linter plugin to enforce trailing commas (enhanced version of `linter` buil
 
 ## Rules
 
+All rules are enabled by default. You can disable each rule in `analysis_options.yaml`
+(see [Installation](#installation) section).
+
 ### better_require_trailing_commas
 
 Enforces trailing commas for multiline collections, function calls, function definitions, and other constructs that
