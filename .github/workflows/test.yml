@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - analyzer-v*
   workflow_dispatch:
 
 jobs:
