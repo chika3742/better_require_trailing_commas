@@ -44,7 +44,7 @@ class AvoidUnnecessaryCommasRule extends AnalysisRule {
       ..addRecordPattern(this, visitor)
       ..addRecordTypeAnnotation(this, visitor)
       ..addSwitchExpression(this, visitor)
-      ..addEnumBody(this, visitor);
+      ..addEnumDeclaration(this, visitor);
   }
 }
 
@@ -149,7 +149,7 @@ class _AvoidUnnecessaryCommasVisitor extends SimpleAstVisitor<void> {
   }
 
   @override
-  void visitEnumBody(EnumBody node) {
+  void visitEnumDeclaration(EnumDeclaration node) {
     if (node.constants.isEmpty) return;
     _checkTrailingComma(
       closingToken: node.semicolon ?? node.rightBracket,
