@@ -104,17 +104,40 @@ Foo(Bar(
 
 **Dart 3.10 or later (Flutter 3.38 or later) is required to use this plugin.**
 
-Edit your `analysis_options.yaml` like below. You don't need to add this to your dependencies (for more information, [see here](https://github.com/dart-lang/sdk/blob/main/pkg/analysis_server_plugin/doc/using_plugins.md)).
+Edit your `analysis_options.yaml` like below. You **don't** need to add this to your dependencies in pubspec (for more
+information, [see here](https://github.com/dart-lang/sdk/blob/main/pkg/analysis_server_plugin/doc/using_plugins.md)).
+
+### For Standalone Use
+
+v4 of `better_require_trailing_commas` supports `analyzer` v10 and v11.
 
 ```yaml
 # ...
 # Note: `plugins` property is TOP LEVEL.
 plugins:
-  # Note: Do not put `riverpod_lint` after this plugin.
-  #       This may cause unexpected behavior.
-  # riverpod_lint: ^3.2.0 # Put this BEFORE better_require_trailing_commas
-  better_require_trailing_commas: ^2.2.0
+  better_require_trailing_commas: ^4.0.0
 # ...
+```
+
+v5 of `better_require_trailing_commas` supports `analyzer` v12 which supports empty bodies syntax.
+
+```yaml
+plugins:
+  better_require_trailing_commas: ^5.0.0
+```
+
+### Using with `riverpod_lint`
+
+Since `riverpod_lint: 3.1.3` does not support `analyzer` v10, use v3 of `better_require_trailing_commas` which
+supports `analyzer` v9.
+
+```yaml
+# ...
+# Note: `plugins` property is TOP LEVEL.
+plugins:
+  # Note: Do not put `riverpod_lint` after this plugin. This may cause unexpected behavior.
+  riverpod_lint: ^3.1.3 # Put this BEFORE better_require_trailing_commas
+  better_require_trailing_commas: ^3.0.0
 ```
 
 Each rule can be disabled by `diagnostics` section like below:
