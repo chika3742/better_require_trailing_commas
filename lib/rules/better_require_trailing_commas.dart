@@ -270,7 +270,7 @@ class AddTrailingCommaFix extends ResolvedCorrectionProducer {
         );
       case SwitchExpression(:final rightBracket):
         await insertCommaAfter(rightBracket.previous!);
-      case EnumBody(:final semicolon, :final rightBracket):
+      case EnumDeclaration(:final semicolon, :final rightBracket):
         await insertCommaAfter((semicolon ?? rightBracket).previous!);
     }
   }
