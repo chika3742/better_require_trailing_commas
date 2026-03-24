@@ -1,3 +1,8 @@
+## 5.0.0
+- **IMPORTANT:** Since this version, I separated the major versions depending on the supported `analyzer` version.
+  Please check the installation section in the README for more details.
+- Minimum supported `analyzer` version is now v12.0.0
+
 ## 2.2.0
 - Added `avoid_unnecessary_commas` lint rule.
 - Fix detection logic for formal parameter lists and record type annots.
