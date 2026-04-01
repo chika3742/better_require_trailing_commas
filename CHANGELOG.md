@@ -1,6 +1,8 @@
-## 5.0.0
-- **IMPORTANT:** Since this version, I separated the major versions depending on the supported `analyzer` version.
-  Please check the installation section in the README for more details.
+## 2.5.0
+- Since this version, I separated the minor versions depending on the supported `analyzer` version.
+  - `2.3.0` supports analyzer `^9.0.0`
+  - `2.4.0` supports analyzer `>=10.0.1 <12.0.0`
+  - `2.5.0` supports analyzer `^12.0.0`
 - Minimum supported `analyzer` version is now v12.0.0
 
 ## 2.2.0
