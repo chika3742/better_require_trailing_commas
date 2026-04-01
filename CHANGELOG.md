@@ -1,4 +1,4 @@
-## 3.0.0
+## 2.3.0
 - Since this version, I separated the minor versions depending on the supported `analyzer` version.
   - `2.3.0` supports analyzer `^9.0.0`
   - `2.4.0` supports analyzer `>=10.0.1 <12.0.0`
