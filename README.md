@@ -107,38 +107,31 @@ Foo(Bar(
 Edit your `analysis_options.yaml` like below. You **don't** need to add this to your dependencies in pubspec (for more
 information, [see here](https://github.com/dart-lang/sdk/blob/main/pkg/analysis_server_plugin/doc/using_plugins.md)).
 
-### For Standalone Use
+### Normal Usage
 
-v4 of `better_require_trailing_commas` supports `analyzer` v10 and v11.
+By specifying `^2.3.0`, the version will be automatically resolved to an appropriate one depending on your other plugins and Dart version.
 
 ```yaml
 # ...
-# Note: `plugins` property is TOP LEVEL.
+# Note: `plugins` is the TOP level key.
 plugins:
-  better_require_trailing_commas: ^4.0.0
+  better_require_trailing_commas: ^2.3.0
 # ...
-```
-
-v5 of `better_require_trailing_commas` supports `analyzer` v12 which supports empty bodies syntax.
-
-```yaml
-plugins:
-  better_require_trailing_commas: ^5.0.0
 ```
 
 ### Using with `riverpod_lint`
 
-Since `riverpod_lint: 3.1.3` does not support `analyzer` v10, use v3 of `better_require_trailing_commas` which
-supports `analyzer` v9.
+Please put `riverpod_lint` plugin before `better_require_trailing_commas` plugin. Otherwise, unexpected behavior may
+occur.
 
 ```yaml
 # ...
-# Note: `plugins` property is TOP LEVEL.
 plugins:
-  # Note: Do not put `riverpod_lint` after this plugin. This may cause unexpected behavior.
   riverpod_lint: ^3.1.3 # Put this BEFORE better_require_trailing_commas
-  better_require_trailing_commas: ^3.0.0
+  better_require_trailing_commas: ^2.3.0
 ```
+
+### Disable Each Rule
 
 Each rule can be disabled by `diagnostics` section like below:
 
@@ -149,6 +142,8 @@ plugins:
     diagnostics:
       avoid_unnecessary_commas: false
 ```
+
+## Usage
 
 Running the linter with command line:
 ```shell
