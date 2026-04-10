@@ -1,3 +1,8 @@
+## 2.3.1
+- Feat: Added support for object/map/list patterns.
+- Fix: `avoid_unnecessary_commas` removes incorrectly closing braces of formal parameter lists.
+- Fix: `avoid_unnecessary_commas` reports even when there is one element in record literals, record type annots, and record patterns.
+
 ## 2.3.0
 - Since this version, I separated the minor versions depending on the supported `analyzer` version.
   - `2.3.0` supports analyzer `^9.0.0`
