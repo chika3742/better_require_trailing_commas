@@ -46,6 +46,9 @@ class BetterRequireTrailingCommasRule extends AnalysisRule {
       ..addRecordPattern(this, visitor)
       ..addRecordTypeAnnotation(this, visitor)
       ..addSwitchExpression(this, visitor)
+      ..addObjectPattern(this, visitor)
+      ..addMapPattern(this, visitor)
+      ..addListPattern(this, visitor)
       ..addEnumBody(this, visitor);
   }
 }
@@ -173,6 +176,39 @@ class _RequireTrailingCommasVisitor extends SimpleAstVisitor<void> {
   }
 
   @override
+  void visitObjectPattern(ObjectPattern node) {
+    if (node.fields.isEmpty) return;
+    _checkTrailingComma(
+      openingToken: node.leftParenthesis,
+      closingToken: node.rightParenthesis,
+      firstNode: node.fields.first,
+      lastNode: node.fields.last,
+    );
+  }
+
+  @override
+  void visitMapPattern(MapPattern node) {
+    if (node.elements.isEmpty) return;
+    _checkTrailingComma(
+      openingToken: node.leftBracket,
+      closingToken: node.rightBracket,
+      firstNode: node.elements.first,
+      lastNode: node.elements.last,
+    );
+  }
+
+  @override
+  void visitListPattern(ListPattern node) {
+    if (node.elements.isEmpty) return;
+    _checkTrailingComma(
+      openingToken: node.leftBracket,
+      closingToken: node.rightBracket,
+      firstNode: node.elements.first,
+      lastNode: node.elements.last,
+    );
+  }
+
+  @override
   void visitEnumBody(EnumBody node) {
     if (node.constants.isEmpty) return;
     _checkTrailingComma(
@@ -269,6 +305,12 @@ class AddTrailingCommaFix extends ResolvedCorrectionProducer {
           (namedFields?.rightBracket ?? rightParenthesis).previous!,
         );
       case SwitchExpression(:final rightBracket):
+        await insertCommaAfter(rightBracket.previous!);
+      case ObjectPattern(:final rightParenthesis):
+        await insertCommaAfter(rightParenthesis.previous!);
+      case ListPattern(:final rightBracket):
+        await insertCommaAfter(rightBracket.previous!);
+      case MapPattern(:final rightBracket):
         await insertCommaAfter(rightBracket.previous!);
       case EnumBody(:final semicolon, :final rightBracket):
         await insertCommaAfter((semicolon ?? rightBracket).previous!);

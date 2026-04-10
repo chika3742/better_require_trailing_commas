@@ -43,6 +43,9 @@ class AvoidUnnecessaryCommasRule extends AnalysisRule {
       ..addRecordPattern(this, visitor)
       ..addRecordTypeAnnotation(this, visitor)
       ..addSwitchExpression(this, visitor)
+      ..addObjectPattern(this, visitor)
+      ..addListPattern(this, visitor)
+      ..addMapPattern(this, visitor)
       ..addEnumBody(this, visitor);
   }
 }
@@ -148,6 +151,33 @@ class _AvoidUnnecessaryCommasVisitor extends SimpleAstVisitor<void> {
   }
 
   @override
+  void visitObjectPattern(ObjectPattern node) {
+    if (node.fields.isEmpty) return;
+    _checkTrailingComma(
+      closingToken: node.rightParenthesis,
+      lastNode: node.fields.last,
+    );
+  }
+
+  @override
+  void visitListPattern(ListPattern node) {
+    if (node.elements.isEmpty) return;
+    _checkTrailingComma(
+      closingToken: node.rightBracket,
+      lastNode: node.elements.last,
+    );
+  }
+
+  @override
+  void visitMapPattern(MapPattern node) {
+    if (node.elements.isEmpty) return;
+    _checkTrailingComma(
+      closingToken: node.rightBracket,
+      lastNode: node.elements.last,
+    );
+  }
+
+  @override
   void visitEnumBody(EnumBody node) {
     if (node.constants.isEmpty) return;
     _checkTrailingComma(
@@ -225,6 +255,12 @@ class RemoveUnnecessaryTrailingCommaFix extends ResolvedCorrectionProducer {
           (namedFields?.rightBracket ?? rightParenthesis).previous!,
         );
       case SwitchExpression(:final rightBracket):
+        await removeComma(rightBracket.previous!);
+      case ObjectPattern(:final rightParenthesis):
+        await removeComma(rightParenthesis.previous!);
+      case ListPattern(:final rightBracket):
+        await removeComma(rightBracket.previous!);
+      case MapPattern(:final rightBracket):
         await removeComma(rightBracket.previous!);
       case EnumBody(:final semicolon, :final rightBracket):
         await removeComma((semicolon ?? rightBracket).previous!);
