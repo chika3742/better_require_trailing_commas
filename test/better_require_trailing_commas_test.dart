@@ -412,4 +412,20 @@ class Bar {
       [lint(74, 1)],
     );
   }
+
+  void test_formalParameterListWithNestedBraces() async {
+    await assertDiagnostics(
+      r"""
+void fn1({
+  String? foo = "value",
+  Map<String, String>? bar = const {"key": "value"}
+}) {}
+void fn2([
+  String? foo = "value",
+  List<String>? bar = const ["a", "b"]
+]) {}
+    """,
+      [lint(88, 1), lint(169, 1)],
+    );
+  }
 }

@@ -248,30 +248,29 @@ class AddTrailingCommaFix extends ResolvedCorrectionProducer {
     }
 
     switch (node) {
-      case ArgumentList(:final rightParenthesis):
-        await insertCommaAfter(rightParenthesis.previous!);
-      case AssertInitializer(:final rightParenthesis):
-        await insertCommaAfter(rightParenthesis.previous!);
-      case AssertStatement(:final rightParenthesis):
-        await insertCommaAfter(rightParenthesis.previous!);
-      case FormalParameterList(:final rightDelimiter, :final rightParenthesis):
-        await insertCommaAfter((rightDelimiter ?? rightParenthesis).previous!);
-      case ListLiteral(:final rightBracket):
-        await insertCommaAfter(rightBracket.previous!);
-      case SetOrMapLiteral(:final rightBracket):
-        await insertCommaAfter(rightBracket.previous!);
-      case RecordLiteral(:final rightParenthesis):
-        await insertCommaAfter(rightParenthesis.previous!);
-      case RecordPattern(:final rightParenthesis):
-        await insertCommaAfter(rightParenthesis.previous!);
-      case RecordTypeAnnotation(:final namedFields, :final rightParenthesis):
-        await insertCommaAfter(
-          (namedFields?.rightBracket ?? rightParenthesis).previous!,
-        );
-      case SwitchExpression(:final rightBracket):
-        await insertCommaAfter(rightBracket.previous!);
-      case BlockEnumBody(:final semicolon, :final rightBracket):
-        await insertCommaAfter((semicolon ?? rightBracket).previous!);
+      case ArgumentList(:final arguments):
+        await insertCommaAfter(arguments.last.endToken);
+      case AssertInitializer(:final message, :final condition):
+        await insertCommaAfter((message ?? condition).endToken);
+      case AssertStatement(:final message, :final condition):
+        await insertCommaAfter((message ?? condition).endToken);
+      case FormalParameterList(:final parameters):
+        await insertCommaAfter(parameters.last.endToken);
+      case ListLiteral(:final elements):
+        await insertCommaAfter(elements.last.endToken);
+      case SetOrMapLiteral(:final elements):
+        await insertCommaAfter(elements.last.endToken);
+      case RecordLiteral(:final fields):
+        await insertCommaAfter(fields.last.endToken);
+      case RecordPattern(:final fields):
+        await insertCommaAfter(fields.last.endToken);
+      case RecordTypeAnnotation(:final namedFields, :final positionalFields):
+        final fields = namedFields?.fields ?? positionalFields;
+        await insertCommaAfter(fields.last.endToken);
+      case SwitchExpression(:final cases):
+        await insertCommaAfter(cases.last.endToken);
+      case BlockEnumBody(:final constants):
+        await insertCommaAfter(constants.last.endToken);
     }
   }
 }
