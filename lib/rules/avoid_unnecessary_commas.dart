@@ -112,7 +112,7 @@ class _AvoidUnnecessaryCommasVisitor extends SimpleAstVisitor<void> {
 
   @override
   void visitRecordLiteral(RecordLiteral node) {
-    if (node.fields.isEmpty) return;
+    if (node.fields.length <= 1) return;
     _checkTrailingComma(
       closingToken: node.rightParenthesis,
       lastNode: node.fields.last,
@@ -121,7 +121,7 @@ class _AvoidUnnecessaryCommasVisitor extends SimpleAstVisitor<void> {
 
   @override
   void visitRecordPattern(RecordPattern node) {
-    if (node.fields.isEmpty) return;
+    if (node.fields.length <= 1) return;
     _checkTrailingComma(
       closingToken: node.rightParenthesis,
       lastNode: node.fields.last,
@@ -130,7 +130,7 @@ class _AvoidUnnecessaryCommasVisitor extends SimpleAstVisitor<void> {
 
   @override
   void visitRecordTypeAnnotation(RecordTypeAnnotation node) {
-    if (node.namedFields == null && node.positionalFields.isEmpty) return;
+    if ((node.namedFields == null && node.positionalFields.length <= 1)) return;
     final fields = (node.namedFields?.fields ?? node.positionalFields);
     _checkTrailingComma(
       closingToken: node.namedFields?.rightBracket ?? node.rightParenthesis,
