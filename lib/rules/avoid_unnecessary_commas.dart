@@ -8,7 +8,6 @@ import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/source/line_info.dart';
-import 'package:analyzer/source/source_range.dart';
 import 'package:analyzer_plugin/utilities/change_builder/change_builder_core.dart';
 import 'package:analyzer_plugin/utilities/fixes/fixes.dart';
 
@@ -197,8 +196,38 @@ class RemoveUnnecessaryTrailingCommaFix extends ResolvedCorrectionProducer {
 
   @override
   Future<void> compute(ChangeBuilder builder) async {
-    await builder.addDartFileEdit(file, (builder) {
-      builder.addDeletion(SourceRange(node.endToken.previous!.offset, 1));
-    });
+    Future<void> removeComma(Token token) {
+      if (token.type != .COMMA) return Future.value();
+      return builder.addDartFileEdit(file, (builder) {
+        builder.addDeletion(token.sourceRange);
+      });
+    }
+
+    switch (node) {
+      case ArgumentList(:final rightParenthesis):
+        await removeComma(rightParenthesis.previous!);
+      case AssertInitializer(:final rightParenthesis):
+        await removeComma(rightParenthesis.previous!);
+      case AssertStatement(:final rightParenthesis):
+        await removeComma(rightParenthesis.previous!);
+      case FormalParameterList(:final rightDelimiter, :final rightParenthesis):
+        await removeComma((rightDelimiter ?? rightParenthesis).previous!);
+      case ListLiteral(:final rightBracket):
+        await removeComma(rightBracket.previous!);
+      case SetOrMapLiteral(:final rightBracket):
+        await removeComma(rightBracket.previous!);
+      case RecordLiteral(:final rightParenthesis):
+        await removeComma(rightParenthesis.previous!);
+      case RecordPattern(:final rightParenthesis):
+        await removeComma(rightParenthesis.previous!);
+      case RecordTypeAnnotation(:final namedFields, :final rightParenthesis):
+        await removeComma(
+          (namedFields?.rightBracket ?? rightParenthesis).previous!,
+        );
+      case SwitchExpression(:final rightBracket):
+        await removeComma(rightBracket.previous!);
+      case EnumBody(:final semicolon, :final rightBracket):
+        await removeComma((semicolon ?? rightBracket).previous!);
+    }
   }
 }
