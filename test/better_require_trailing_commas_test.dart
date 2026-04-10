@@ -144,6 +144,37 @@ void fn4(
     """);
   }
 
+  void test_formalParameterListWithDelimiterOnSameLineAsParamWithoutComma() async {
+    await assertDiagnostics(
+      r"""
+void fn1(
+  {String? foo}
+) {}
+void fn2(
+  [String? foo]
+) {}
+void fn3(
+  String? foo, {String? bar}
+) {}
+    """,
+      [lint(24, 1), lint(55, 1), lint(99, 1)],
+    );
+  }
+
+  void test_formalParameterListWithDelimiterOnSameLineAsParamWithComma() async {
+    await assertNoDiagnostics(r"""
+void fn1(
+  {String? foo,}
+) {}
+void fn2(
+  [String? foo,]
+) {}
+void fn3(
+  String? foo, {String? bar,}
+) {}
+    """);
+  }
+
   void test_listLiteralWithoutComma() async {
     await assertDiagnostics(
       r"""
