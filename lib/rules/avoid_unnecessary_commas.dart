@@ -8,6 +8,7 @@ import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/source/line_info.dart';
+import 'package:analyzer/source/source_range.dart';
 import 'package:analyzer_plugin/utilities/change_builder/change_builder_core.dart';
 import 'package:analyzer_plugin/utilities/fixes/fixes.dart';
 
@@ -43,6 +44,9 @@ class AvoidUnnecessaryCommasRule extends AnalysisRule {
       ..addRecordPattern(this, visitor)
       ..addRecordTypeAnnotation(this, visitor)
       ..addSwitchExpression(this, visitor)
+      ..addObjectPattern(this, visitor)
+      ..addListPattern(this, visitor)
+      ..addMapPattern(this, visitor)
       ..addEnumDeclaration(this, visitor);
   }
 }
@@ -148,6 +152,33 @@ class _AvoidUnnecessaryCommasVisitor extends SimpleAstVisitor<void> {
   }
 
   @override
+  void visitObjectPattern(ObjectPattern node) {
+    if (node.fields.isEmpty) return;
+    _checkTrailingComma(
+      closingToken: node.rightParenthesis,
+      lastNode: node.fields.last,
+    );
+  }
+
+  @override
+  void visitListPattern(ListPattern node) {
+    if (node.elements.isEmpty) return;
+    _checkTrailingComma(
+      closingToken: node.rightBracket,
+      lastNode: node.elements.last,
+    );
+  }
+
+  @override
+  void visitMapPattern(MapPattern node) {
+    if (node.elements.isEmpty) return;
+    _checkTrailingComma(
+      closingToken: node.rightBracket,
+      lastNode: node.elements.last,
+    );
+  }
+
+  @override
   void visitEnumDeclaration(EnumDeclaration node) {
     if (node.constants.isEmpty) return;
     _checkTrailingComma(
@@ -199,7 +230,7 @@ class RemoveUnnecessaryTrailingCommaFix extends ResolvedCorrectionProducer {
     Future<void> removeComma(Token token) {
       if (token.type != .COMMA) return Future.value();
       return builder.addDartFileEdit(file, (builder) {
-        builder.addDeletion(token.sourceRange);
+        builder.addDeletion(SourceRange(token.offset, token.length));
       });
     }
 
@@ -226,7 +257,13 @@ class RemoveUnnecessaryTrailingCommaFix extends ResolvedCorrectionProducer {
         );
       case SwitchExpression(:final rightBracket):
         await removeComma(rightBracket.previous!);
-      case EnumBody(:final semicolon, :final rightBracket):
+      case ObjectPattern(:final rightParenthesis):
+        await removeComma(rightParenthesis.previous!);
+      case ListPattern(:final rightBracket):
+        await removeComma(rightBracket.previous!);
+      case MapPattern(:final rightBracket):
+        await removeComma(rightBracket.previous!);
+      case EnumDeclaration(:final semicolon, :final rightBracket):
         await removeComma((semicolon ?? rightBracket).previous!);
     }
   }
