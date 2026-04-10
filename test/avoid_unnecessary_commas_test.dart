@@ -212,6 +212,92 @@ void fn() {
     """);
   }
 
+  void test_objectPatternWithUnnecessaryComma() async {
+    await assertDiagnostics(
+      r"""
+class Foo {
+  final Object param;
+  
+  const Foo(this.param);
+}
+void fn(Foo input) {
+  switch (input) {
+    case Foo(:final String param,):
+      break;
+    case Foo(param: 42,):
+      break;
+  }
+}
+    """,
+      [lint(136, 1), lint(175, 1)],
+    );
+  }
+
+  void test_objectPatternWithoutUnnecessaryComma() async {
+    await assertNoDiagnostics(
+      r"""
+class Foo {
+  final Object param;
+  
+  const Foo(this.param);
+}
+void fn(Foo input) {
+  switch (input) {
+    case Foo(:final String param):
+      break;
+    case Foo(param: 42):
+      break;
+    case Foo():
+      break;
+  }
+}
+    """,
+    );
+  }
+
+  void test_listAndMapPatternWithUnnecessaryComma() async {
+    await assertDiagnostics(
+      r"""
+void fn() {
+  final list = [10, 20, 30];
+  final map = {"a": 10, "b": 20, "c": 30};
+  switch (list) {
+    case [10, 20,]:
+      break;
+    case []:
+      break;
+  }
+  switch (map) {
+    case { "a": 10, "b": 20, }:
+      break;
+  }
+}
+    """,
+      [lint(118, 1), lint(209, 1)],
+    );
+  }
+
+  void test_listAndMapPatternWithoutUnnecessaryComma() async {
+    await assertNoDiagnostics(
+      r"""
+void fn() {
+  final list = [10, 20, 30];
+  final map = {"a": 10, "b": 20, "c": 30};
+  switch (list) {
+    case [10, 20]:
+      break;
+    case []:
+      break;
+  }
+  switch (map) {
+    case { "a": 10, "b": 20 }:
+      break;
+  }
+}
+    """,
+    );
+  }
+
   void test_enumDeclarationWithUnnecessaryComma() async {
     await assertDiagnostics(
       r"""
