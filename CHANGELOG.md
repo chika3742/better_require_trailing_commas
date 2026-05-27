@@ -1,3 +1,6 @@
+## 2.5.2
+- Allow analyzer v13 (now `>=12.0.0 <14.0.0`)
+
 ## 2.5.1
 - Feat: Added support for object/map/list patterns.
 - Fix: `avoid_unnecessary_commas` removes incorrectly closing braces of formal parameter lists.

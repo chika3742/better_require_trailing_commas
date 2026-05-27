@@ -109,7 +109,7 @@ information, [see here](https://github.com/dart-lang/sdk/blob/main/pkg/analysis_
 
 ### Normal Usage
 
-By specifying `^2.3.0`, the version will be automatically resolved to an appropriate one depending on your other plugins and Dart version.
+The latest version (2.5.x) requires a very new version of analyzer. By specifying `^2.3.0`, the version will be automatically resolved to an appropriate one depending on your other plugins and Dart version.
 
 ```yaml
 # ...
