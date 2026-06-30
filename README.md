@@ -109,13 +109,14 @@ information, [see here](https://github.com/dart-lang/sdk/blob/main/pkg/analysis_
 
 ### Normal Usage
 
-The latest version (2.5.x) requires a very new version of analyzer. By specifying `^2.3.0`, the version will be automatically resolved to an appropriate one depending on your other plugins and Dart version.
+The latest version requires a very new version of analyzer. By specifying `^2.5.3`, the version will be
+automatically resolved to an appropriate one depending on your other plugins and Dart version.
 
 ```yaml
 # ...
-# Note: `plugins` is the TOP level key.
+# Note: `plugins` is a top-level key.
 plugins:
-  better_require_trailing_commas: ^2.3.0
+  better_require_trailing_commas: ^2.5.3
 # ...
 ```
 
@@ -127,8 +128,8 @@ occur.
 ```yaml
 # ...
 plugins:
-  riverpod_lint: ^3.1.3 # Put this BEFORE better_require_trailing_commas
-  better_require_trailing_commas: ^2.3.0
+  riverpod_lint: ^3.1.4 # Put this BEFORE better_require_trailing_commas
+  better_require_trailing_commas: ^2.5.3
 ```
 
 ### Disable Each Rule
@@ -145,7 +146,13 @@ plugins:
 
 ## Usage
 
-Running the linter with command line:
+Running the linter with the command line:
 ```shell
 dart analyze
 ```
+
+> [!NOTE]
+> `dart fix` is currently not supported by `analysis_server_plugin`.
+
+> [!NOTE]
+> `flutter analyze` may not report the issues with this plugin. See [this issue](https://github.com/flutter/flutter/issues/187999).
