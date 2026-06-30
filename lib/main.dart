@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:analysis_server_plugin/plugin.dart';
 import 'package:analysis_server_plugin/registry.dart';
-import 'package:better_require_trailing_commas/rules/avoid_unnecessary_commas.dart';
 
+import 'rules/avoid_unnecessary_commas.dart';
 import 'rules/better_require_trailing_commas.dart';
 
 final plugin = _BetterRequireTrailingCommasPlugin();
