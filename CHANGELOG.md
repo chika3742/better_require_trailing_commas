@@ -1,3 +1,9 @@
+## 2.5.4
+- Removed direct dependency from `analyzer_plugin`.
+- Require analyzer v13.2.0 (now `>=13.2.0 <15.0.0`).
+- **Important**: version 2.3.x and 2.4.x whose supports analyzer `<12.0.0` are now discontinued. From now on, use the
+version of 2.5.x.
+
 ## 2.5.3
 - Allow analyzer v14 (now `>=12.0.0 <15.0.0`)
 
