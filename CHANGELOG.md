@@ -1,3 +1,6 @@
+## 2.5.3
+- Allow analyzer v14 (now `>=12.0.0 <15.0.0`)
+
 ## 2.5.2
 - Allow analyzer v13 (now `>=12.0.0 <14.0.0`)
 
