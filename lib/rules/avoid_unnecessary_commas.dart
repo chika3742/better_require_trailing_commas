@@ -215,14 +215,22 @@ class RemoveUnnecessaryTrailingCommaFix extends ResolvedCorrectionProducer {
     "Remove a trailing comma",
   );
 
+  static const _multiKind = FixKind(
+    "brtc.fix.removeUnnecessaryTrailingComma.multi",
+    DartFixKindPriority.standard,
+    "Remove unnecessary trailing commas everywhere in file",
+  );
+
   RemoveUnnecessaryTrailingCommaFix({required super.context});
 
   @override
-  CorrectionApplicability get applicability =>
-      CorrectionApplicability.singleLocation;
+  CorrectionApplicability get applicability => .automatically;
 
   @override
   FixKind get fixKind => _kind;
+
+  @override
+  FixKind? get multiFixKind => _multiKind;
 
   @override
   Future<void> compute(ChangeBuilder builder) async {

@@ -31,7 +31,7 @@ class BetterRequireTrailingCommasRule extends AnalysisRule {
   void registerNodeProcessors(
       RuleVisitorRegistry registry,
       RuleContext context,
-      ) {
+  ) {
     final visitor = _RequireTrailingCommasVisitor(this, context);
 
     registry
@@ -266,14 +266,22 @@ class AddTrailingCommaFix extends ResolvedCorrectionProducer {
     "Add a trailing comma",
   );
 
+  static const _multiKind = FixKind(
+    "brtc.fix.addTrailingComma.multi",
+    DartFixKindPriority.standard,
+    "Add trailing commas everywhere in file",
+  );
+
   AddTrailingCommaFix({required super.context});
 
   @override
-  CorrectionApplicability get applicability =>
-      CorrectionApplicability.singleLocation;
+  CorrectionApplicability get applicability => .automatically;
 
   @override
   FixKind get fixKind => _kind;
+
+  @override
+  FixKind? get multiFixKind => _multiKind;
 
   @override
   Future<void> compute(ChangeBuilder builder) async {
