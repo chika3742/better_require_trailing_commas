@@ -1,3 +1,7 @@
+## 2.5.5
+- Require analyzer v14.1.0 (now `>=14.1.0 <15.0.0`)
+- Added support for bulk fix
+
 ## 2.5.4
 - Removed direct dependency from `analyzer_plugin`.
 - Require analyzer v13.2.0 (now `>=13.2.0 <15.0.0`).
